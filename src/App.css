@@ -1,0 +1,10 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.appRoot {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, .1);
+}

@@ -1,0 +1,20 @@
+.gameBoard {
+  display: grid;
+  margin: auto;
+  text-align: center;
+  padding: 8px;
+  border: 1px solid black;
+  width: min-content;
+  grid-auto-flow: row;
+}
+
+.gridRow {
+  border-bottom: 1px solid black;
+  display: flex;
+  box-sizing: border-box;
+  height: 50px;
+}
+
+.gridRow:first-child {
+  border-top: 1px solid black;
+}

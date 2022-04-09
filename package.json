@@ -21,8 +21,10 @@
   },
   "homepage": "https://github.com/Zanoro9000/othello#readme",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.1",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-redux": "^7.2.8"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
