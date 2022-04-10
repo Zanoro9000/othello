@@ -48,8 +48,7 @@ Don’t write a backend, login page, or anything else that is a distraction from
     - AI
     - Online
 - Tile animations
-  - Show tiles flipping and changing color
-  - Animated line flip
+  - Show tiles flipping and changing color ✅
 - Theming
   - Ability to change total colors/theme
 - Game customization
