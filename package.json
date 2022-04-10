@@ -7,6 +7,8 @@
     "start": "webpack serve --hot --open",
     "dev": "webpack serve --hot --open --config ./dev.webpack.config.js",
     "watch": "webpack --watch",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "build": "webpack --config webpack.config.js --mode production"
   },
   "repository": {

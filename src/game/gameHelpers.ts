@@ -97,3 +97,5 @@ export function defaultStartingPieces(rows: number, cols: number): GamePiece[] {
     },
   ];
 }
+
+export const getTileColor = (turn: number, startingPlayer: Player): Player => (turn % 2) - startingPlayer;

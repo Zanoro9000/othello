@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { GamePiece, placePiece, TILE_COLOR } from '../redux/slices/gameSlice';
+import { getTileColor } from './gameHelpers';
 import './Tile.scss';
 
 export type TileClassNames = 'black' | 'white' | 'available' | ''
@@ -23,7 +24,7 @@ export function Tile({ tile }: TileProps) {
   const { startingPlayer, turn } = useAppSelector((s) => ({ startingPlayer: s.game.startingPlayer, turn: s.game.turn }));
 
   const onClick = () => {
-    dispatch(placePiece({ ...tile, type: turn }));
+    dispatch(placePiece({ ...tile, type: getTileColor(turn, startingPlayer) }));
   };
 
   // startingPlayer is enum of color, so either 0 or 1
