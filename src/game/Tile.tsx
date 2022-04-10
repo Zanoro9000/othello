@@ -17,7 +17,7 @@ const getTileClassName = (type: TILE_COLOR): TileClassNames => {
   }
 };
 
-export function Tile({ row, col, type }: GamePiece) {
+function TileComp({ row, col, type }: GamePiece) {
   const dispatch = useAppDispatch();
   const { startingPlayer, turn } = useAppSelector((s) => ({ startingPlayer: s.game.startingPlayer, turn: s.game.turn }));
 
@@ -35,6 +35,8 @@ export function Tile({ row, col, type }: GamePiece) {
 
   return <Component className={`tile ${getTileClassName(type)} turn-${getTileClassName(turnColor)}`} />;
 }
+
+export const Tile = React.memo((props: GamePiece) => <TileComp {...props} />);
 
 export type StaticTileProps = {
   color: Player,
