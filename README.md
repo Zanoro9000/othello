@@ -31,8 +31,8 @@ Don’t write a backend, login page, or anything else that is a distraction from
     - EsLint
     - SCSS
 2. Redux w/ Toolkit ✅
-3. Game board ✅
-4. Tiles
+3. Game board ✅ 
+4. Tiles ✅
 5. Game logic
 
 ## Future Features
