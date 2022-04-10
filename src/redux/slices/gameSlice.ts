@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import {
   clearAvailablePieces,
+  getFlippableTiles,
+  getOtherPlayer,
   getTileColor,
   getValidNewPieces, makeEmptyGrid, makeGrid, mFillGrid,
 } from '../../game/gameHelpers';
@@ -20,6 +22,8 @@ export type GamePiece = {
   col: number;
   type: TILE_COLOR;
 }
+
+export type PlacedGamePiece = GamePiece & { type: Player }
 
 export enum STATE {
   STARTING,
@@ -57,9 +61,12 @@ export const gameSlice = createSlice({
       state.gameState = mFillGrid(newGrid, getValidNewPieces(newGrid, 0));
       state.state = STATE.PLAYING;
     },
-    placePiece: (state, action: PayloadAction<GamePiece>) => {
+    placePiece: (state, action: PayloadAction<PlacedGamePiece>) => {
       const newTurn = state.turn + 1;
       const newGrid = clearAvailablePieces(mFillGrid(state.gameState, [action.payload]));
+      const flippableTiles = getFlippableTiles(newGrid, action.payload.row, action.payload.col, action.payload.type);
+      const flippedTiles = flippableTiles.map((t) => ({ ...t, type: getOtherPlayer(t.type) }));
+      mFillGrid(newGrid, flippedTiles);
       const validNewPieces = getValidNewPieces(newGrid, getTileColor(newTurn, state.startingPlayer));
       state.gameState = mFillGrid(newGrid, validNewPieces);
       state.turn = validNewPieces.length > 0 ? newTurn : STATE.FINISHED;

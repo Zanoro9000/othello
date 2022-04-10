@@ -1,4 +1,6 @@
-import { GamePiece, Player, TILE_COLOR } from '../redux/slices/gameSlice';
+import {
+  GamePiece, PlacedGamePiece, Player, TILE_COLOR,
+} from '../redux/slices/gameSlice';
 
 export function makeEmptyGrid(rows: number, cols: number): null[][] {
   return Array.from(Array(rows), () => Array.from(Array(cols), () => null));
@@ -26,9 +28,49 @@ export function fillGrid(board: GamePiece[][], pieces: GamePiece[]): GamePiece[]
   return newBoard;
 }
 
-export function clearAvailablePieces(board: GamePiece[][]): GamePiece[][] {
+// recursively flip in direction from new tile, looking for >1 of other color, then same color
+function getFlippableInDirection(board: PlacedGamePiece[][], row: number, col: number, [dirR, dirC]: [number, number], origColor: Player): PlacedGamePiece[] | null {
+  const rows = board.length;
+  const cols = board[0]?.length;
+  const newRow = row + dirR;
+  const newCol = col + dirC;
+  if (newRow < 0 || newCol < 0 || newRow >= rows || newCol >= cols) return null;
+
+  const tile = board[newRow][newCol];
+  if (tile === null) return [null];
+  if (tile.type === origColor) return [tile];
+  if (tile.type !== origColor) return [tile, ...getFlippableInDirection(board, newRow, newCol, [dirR, dirC], origColor)];
+  return [null];
+}
+
+// flip all (valid) tiles around a specified piece on the board
+export function getFlippableTiles(board: PlacedGamePiece[][], row: number, col: number, origColor: Player): PlacedGamePiece[] {
+  const rows = board.length;
+  const cols = board[0]?.length;
+
+  if (row < 0 || col < 0 || row >= rows || col >= cols) return null;
+
+  for (let r = Math.max(row - 1, 0); r <= Math.min(row + 1, rows - 1); r++) {
+    for (let c = Math.max(col - 1, 0); c <= Math.min(col + 1, cols - 1); c++) {
+      if (r === row && c === col) continue;
+      const foundTiles = getFlippableInDirection(board, row, col, [r - row, c - col], origColor).filter(Boolean);
+      const lastTile = foundTiles.pop();
+      if (lastTile && lastTile.type === origColor && foundTiles.length > 0) return foundTiles;
+    }
+  }
+
+  return [];
+}
+
+export function placeAndFlip(board: PlacedGamePiece[][], piece: PlacedGamePiece): GamePiece[][] {
+  board[piece.row][piece.col] = piece;
+  const flippableTiles = getFlippableTiles(board, piece.row, piece.col, piece.type);
+  return mFillGrid(board, flippableTiles);
+}
+
+export function clearAvailablePieces(board: GamePiece[][]): PlacedGamePiece[][] {
   const placedPieces = board.flatMap((row) => row.filter((tile) => tile !== null && tile.type !== TILE_COLOR.AVAILABLE));
-  const newBoard = makeGrid(board.length, board[0].length, placedPieces);
+  const newBoard = makeGrid(board.length, board[0].length, placedPieces) as PlacedGamePiece[][];
   return newBoard;
 }
 
@@ -117,3 +159,4 @@ export function defaultStartingPieces(rows: number, cols: number): GamePiece[] {
 }
 
 export const getTileColor = (turn: number, startingPlayer: Player): Player => (turn % 2) - startingPlayer;
+export const getOtherPlayer = (color: Player): Player => 1 - color;
