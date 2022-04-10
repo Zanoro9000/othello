@@ -49,7 +49,7 @@ export const gameSlice = createSlice({
   },
 });
 
-export const { reset } = gameSlice.actions;
+export const { reset, setInitialState, placePiece } = gameSlice.actions;
 
 export const useGameSelector = <T>(s: (a: GameState) => T) =>
   useSelector<RootState, T>((state) => s(state.game));

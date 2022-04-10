@@ -71,3 +71,28 @@ export function getValidPieces(board: GamePiece[][], turn: Player): GamePiece[] 
 
   return [...new Map(validPieces.map((p) => [`${p.row}x${p.col}`, p])).values()];
 }
+
+export function defaultStartingPieces(rows: number, cols: number): GamePiece[] {
+  return [
+    {
+      row: Math.floor(rows / 2),
+      col: Math.floor(cols / 2),
+      type: TILE_COLOR.BLACK,
+    },
+    {
+      row: Math.floor(rows / 2),
+      col: Math.floor(cols + 2 / 2),
+      type: TILE_COLOR.WHITE,
+    },
+    {
+      row: Math.floor(rows + 2 / 2),
+      col: Math.floor(cols / 2),
+      type: TILE_COLOR.WHITE,
+    },
+    {
+      row: Math.floor(rows + 2 / 2),
+      col: Math.floor(cols + 2 / 2),
+      type: TILE_COLOR.BLACK,
+    },
+  ];
+}
