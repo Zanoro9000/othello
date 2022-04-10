@@ -18,6 +18,17 @@
   grid-auto-columns: minmax(0, 1fr);
   box-sizing: border-box;
   background-color: #6699cc;
+  
+  .gridSpace {
+    border-right: 1px solid black;
+    box-sizing: border-box;
+    color: black;
+    padding: 4px;
+  }
+  
+  .gridSpace:first-child {
+    border-left: 1px solid black;
+  }
 }
 
 .gridRow:first-child {
