@@ -34,7 +34,7 @@ function getFlippableInDirection(board: PlacedGamePiece[][], row: number, col: n
   const cols = board[0]?.length;
   const newRow = row + dirR;
   const newCol = col + dirC;
-  if (newRow < 0 || newCol < 0 || newRow >= rows || newCol >= cols) return null;
+  if (newRow < 0 || newCol < 0 || newRow >= rows || newCol >= cols) return [null];
 
   const tile = board[newRow][newCol];
   if (tile === null) return [null];
