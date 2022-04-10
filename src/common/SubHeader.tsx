@@ -2,12 +2,19 @@ import React from 'react';
 import { getScore, getTileColor } from '../game/gameHelpers';
 import { StaticTile } from '../game/Tile';
 import { useAppSelector } from '../redux/hooks';
-import { STATE, TILE_COLOR } from '../redux/slices/gameSlice';
+import {
+  DIFFICULTY, GAME_TYPE, STATE, TILE_COLOR,
+} from '../redux/slices/gameSlice';
 import './SubHeader.scss';
 
 export function SubHeader() {
   const {
-    turn, startingPlayer, gameState, state,
+    turn,
+    startingPlayer,
+    gameState,
+    state,
+    gameType,
+    ai,
   } = useAppSelector((a) => a.game);
 
   const { [TILE_COLOR.BLACK]: black, [TILE_COLOR.WHITE]: white } = getScore(gameState);
@@ -30,7 +37,8 @@ export function SubHeader() {
         <div className="turnSelector">{getTileColor(turn, startingPlayer) === TILE_COLOR.BLACK ? '<' : '>'}</div>
         <div className={`player2Score ${tile2Winner} ${draw}`}>
           <div className="player2Section">
-            <div className="player2">Player 2</div>
+            {gameType === GAME_TYPE.LOCAL_MULTIPLAYER && <div className="player2">Player 2</div>}
+            {gameType === GAME_TYPE.AI && <div className="player2">{`AI - ${DIFFICULTY[ai.difficulty]}`}</div>}
             <StaticTile color={TILE_COLOR.WHITE} text={white} />
           </div>
           {tile2Winner && <div className="winnerText">Winner!</div>}

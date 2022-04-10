@@ -29,7 +29,7 @@ export function fillGrid(board: GamePiece[][], pieces: GamePiece[]): GamePiece[]
 }
 
 // recursively flip in direction from new tile, looking for >1 of other color, then same color
-function getFlippableInDirection(board: PlacedGamePiece[][], row: number, col: number, [dirR, dirC]: [number, number], origColor: Player): PlacedGamePiece[] | null {
+function getFlippableInDirection(board: GamePiece[][], row: number, col: number, [dirR, dirC]: [number, number], origColor: Player): PlacedGamePiece[] | null {
   const rows = board.length;
   const cols = board[0]?.length;
   const newRow = row + dirR;
@@ -38,13 +38,13 @@ function getFlippableInDirection(board: PlacedGamePiece[][], row: number, col: n
 
   const tile = board[newRow][newCol];
   if (tile === null) return [null];
-  if (tile.type === origColor) return [tile];
-  if (tile.type !== origColor) return [tile, ...getFlippableInDirection(board, newRow, newCol, [dirR, dirC], origColor)];
+  if (tile.type === origColor) return [tile as PlacedGamePiece];
+  if (tile.type !== origColor) return [tile as PlacedGamePiece, ...getFlippableInDirection(board, newRow, newCol, [dirR, dirC], origColor)];
   return [null];
 }
 
 // flip all (valid) tiles around a specified piece on the board
-export function getFlippableTiles(board: PlacedGamePiece[][], row: number, col: number, origColor: Player): PlacedGamePiece[] {
+export function getFlippableTiles(board: GamePiece[][], row: number, col: number, origColor: Player): PlacedGamePiece[] {
   const rows = board.length;
   const cols = board[0]?.length;
 
@@ -76,8 +76,8 @@ export function clearAvailablePieces(board: GamePiece[][]): PlacedGamePiece[][] 
   return newBoard;
 }
 
-export function getPieces(board: GamePiece[][], player: Player): GamePiece[] {
-  return board.flatMap((row) => row.filter((col) => col?.type === player));
+export function getPieces(board: GamePiece[][], type: TILE_COLOR): GamePiece[] {
+  return board.flatMap((row) => row.filter((col) => col?.type === type));
 }
 
 // recursively search in direction from original tile, looking for null after any amount of other color

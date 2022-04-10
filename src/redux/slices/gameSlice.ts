@@ -31,6 +31,18 @@ export enum STATE {
   FINISHED
 }
 
+export enum DIFFICULTY {
+  EASY,
+  MEDIUM,
+  HARD
+}
+
+export enum GAME_TYPE {
+  LOCAL_MULTIPLAYER,
+  AI,
+  ONLINE
+}
+
 export type GameState = {
   state: STATE;
   turn: number;
@@ -38,6 +50,16 @@ export type GameState = {
   rows: number;
   cols: number;
   gameState: GamePiece[][]
+  gameType: GAME_TYPE;
+  user: {
+    player: Player;
+    name: string,
+  }
+  ai: {
+    player: Player;
+    difficulty: DIFFICULTY;
+    speed: number;
+  }
 }
 
 // Define the initial state using that type
@@ -48,6 +70,16 @@ const initialState: GameState = {
   rows: 8,
   cols: 8,
   gameState: makeEmptyGrid(8, 8),
+  gameType: GAME_TYPE.AI,
+  user: {
+    player: TILE_COLOR.BLACK,
+    name: 'Player 1',
+  },
+  ai: {
+    player: TILE_COLOR.WHITE,
+    difficulty: DIFFICULTY.EASY,
+    speed: 2,
+  },
 };
 
 export const gameSlice = createSlice({
