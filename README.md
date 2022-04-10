@@ -85,6 +85,7 @@ Don’t write a backend, login page, or anything else that is a distraction from
   - Would want to find a more integrated solution for being able to change the theme on the fly (dark mode, etc.)
 - Saving and continuing games/running multiple games
   - Could do this locally but would need UI for it and then have a load from serialized reducer
+- Automated testing is always nice, but definitely don't have time for that in a coding challenge
 
 ## Overall Thoughts
 - I enjoyed the challenge, it was a simple enough game to execute well even if not familiar with it while also being able to show a developers skill and design process
