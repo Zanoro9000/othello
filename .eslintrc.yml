@@ -32,3 +32,4 @@ rules:
   "@typescript-eslint/no-shadow": 2
   import/prefer-default-export: 0
   react/no-array-index-key: 0
+  no-plusplus: 0

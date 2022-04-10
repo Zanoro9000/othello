@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
+import { makeEmptyGrid, makeGrid } from '../../game/gameHelpers';
 import type { RootState } from '../store';
 
 export enum TILE_COLOR {
@@ -7,6 +8,8 @@ export enum TILE_COLOR {
   WHITE,
   AVAILABLE
 }
+
+export type Player = TILE_COLOR.BLACK | TILE_COLOR.WHITE
 
 export type GamePiece = {
   row: number;
@@ -16,10 +19,10 @@ export type GamePiece = {
 
 export type GameState = {
   turn: number;
-  startingPlayer: TILE_COLOR;
+  startingPlayer: Player;
   rows: number;
   cols: number;
-  gameState: GamePiece[]
+  gameState: GamePiece[][]
 }
 
 // Define the initial state using that type
@@ -28,7 +31,7 @@ const initialState: GameState = {
   startingPlayer: TILE_COLOR.BLACK,
   rows: 8,
   cols: 8,
-  gameState: [],
+  gameState: makeEmptyGrid(8, 8),
 };
 
 export const gameSlice = createSlice({
@@ -38,10 +41,10 @@ export const gameSlice = createSlice({
     reset: () => initialState,
     setInitialState: (state, action: PayloadAction<GamePiece[]>) => {
       state.turn = 0;
-      state.gameState = action.payload;
+      state.gameState = makeGrid(state.rows, state.cols, action.payload);
     },
     placePiece: (state, action: PayloadAction<GamePiece>) => {
-      state.gameState.push(action.payload);
+      state.gameState[action.payload.row][action.payload.col] = action.payload;
     },
   },
 });
