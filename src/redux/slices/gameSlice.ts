@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
 import {
+  clearAvailablePieces,
+  getTileColor,
   getValidPieces, makeEmptyGrid, makeGrid, mFillGrid,
 } from '../../game/gameHelpers';
 import type { RootState } from '../store';
@@ -47,8 +49,10 @@ export const gameSlice = createSlice({
       state.gameState = mFillGrid(newGrid, getValidPieces(newGrid, 0));
     },
     placePiece: (state, action: PayloadAction<GamePiece>) => {
-      state.gameState[action.payload.row][action.payload.col] = action.payload;
-      state.turn += 1;
+      const newTurn = state.turn + 1;
+      const newGrid = clearAvailablePieces(mFillGrid(state.gameState, [action.payload]));
+      state.gameState = mFillGrid(newGrid, getValidPieces(newGrid, getTileColor(newTurn, state.startingPlayer)));
+      state.turn = newTurn;
     },
   },
 });

@@ -11,11 +11,18 @@
 
 .tile.black:not(.available) {
   background-color: black;
+  color: white;
   transform: rotateY(180deg);
+
+  .tileText {
+    transform: rotateY(-180deg);
+    transition: none;
+  }
 }
 
 .tile.white:not(.available) {
   background-color: white;
+  color: black;
   transform: rotateY(0deg);
 }
 

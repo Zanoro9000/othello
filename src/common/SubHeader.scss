@@ -1,0 +1,44 @@
+.subheader {
+  width: 60%;
+  margin: auto;
+  margin-bottom: 16px;
+  height: 64px;
+  font-size: 32px;
+  line-height: 64px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+  .score {
+    display: flex;
+    justify-content: center;
+    min-width: 200px;
+    width: 100%;
+    margin: auto;
+  }
+
+  .player1 {
+    margin-left: 8px;
+  }
+
+  .turnSelector {
+    margin: auto 16px;
+  }
+
+  .player2 {
+    margin-right: 8px;
+  }
+
+  .tile {
+    margin: auto;
+
+    &:first-child {
+      margin-right: 8px;
+    }
+
+    &:last-child {
+      margin-left: 8px;
+    }    
+  }
+}

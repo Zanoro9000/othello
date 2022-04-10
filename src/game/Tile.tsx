@@ -1,6 +1,8 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { GamePiece, placePiece, TILE_COLOR } from '../redux/slices/gameSlice';
+import {
+  GamePiece, placePiece, Player, TILE_COLOR,
+} from '../redux/slices/gameSlice';
 import { getTileColor } from './gameHelpers';
 import './Tile.scss';
 
@@ -38,6 +40,16 @@ export function Tile({ tile }: TileProps) {
   return <Component className={`tile ${getTileClassName(tile.type)} turn-${getTileClassName(turnColor)}`} />;
 }
 
-export function StaticTile({ tile }: TileProps) {
-  return <div className={`tile ${getTileClassName(tile.type)}`} />;
+export type StaticTileProps = {
+  color: Player,
+  size?: string | number,
+  text?: string | number,
+}
+
+export function StaticTile({ color, size = '50px', text = '' }: StaticTileProps) {
+  return (
+    <div className={`tile ${getTileClassName(color)}`} style={{ width: size, height: size, lineHeight: size }}>
+      <div className="tileText">{text}</div>
+    </div>
+  );
 }

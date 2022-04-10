@@ -20,9 +20,15 @@ export function mFillGrid(board: GamePiece[][], pieces: GamePiece[]): GamePiece[
 }
 
 export function fillGrid(board: GamePiece[][], pieces: GamePiece[]): GamePiece[][] {
-  const oldPieces = board.flatMap((row) => row.filter((col) => col !== null));
+  const oldPieces = board.flatMap((row) => row.filter((tile) => tile !== null));
   const newBoard = makeGrid(board.length, board[0].length, oldPieces);
   mFillGrid(newBoard, pieces);
+  return newBoard;
+}
+
+export function clearAvailablePieces(board: GamePiece[][]): GamePiece[][] {
+  const placedPieces = board.flatMap((row) => row.filter((tile) => tile !== null && tile.type !== TILE_COLOR.AVAILABLE));
+  const newBoard = makeGrid(board.length, board[0].length, placedPieces);
   return newBoard;
 }
 
@@ -71,6 +77,18 @@ export function getValidPieces(board: GamePiece[][], turn: Player): GamePiece[] 
   const validPieces = pieces.flatMap((p) => searchAroundTile(board, p.row, p.col, turn));
 
   return [...new Map(validPieces.map((p) => [`${p.row}x${p.col}`, p])).values()];
+}
+
+type Score = Record<Player, number>
+
+export function getScore(board: GamePiece[][]): Score {
+  return board.reduce(
+    (out, row) =>
+      row.reduce((acc, tile) => (tile && tile.type !== TILE_COLOR.AVAILABLE
+        ? { ...acc, [tile.type]: acc[tile.type] + 1 }
+        : acc), out),
+    { 0: 0, 1: 0 },
+  );
 }
 
 export function defaultStartingPieces(rows: number, cols: number): GamePiece[] {
