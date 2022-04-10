@@ -69,7 +69,8 @@ export const gameSlice = createSlice({
       mFillGrid(newGrid, flippedTiles);
       const validNewPieces = getValidNewPieces(newGrid, getTileColor(newTurn, state.startingPlayer));
       state.gameState = mFillGrid(newGrid, validNewPieces);
-      state.turn = validNewPieces.length > 0 ? newTurn : STATE.FINISHED;
+      state.turn = newTurn;
+      state.state = validNewPieces.length > 0 ? STATE.PLAYING : STATE.FINISHED;
     },
   },
 });

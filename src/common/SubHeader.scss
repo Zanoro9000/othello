@@ -2,7 +2,6 @@
   width: 60%;
   margin: auto;
   margin-bottom: 16px;
-  height: 64px;
   font-size: 32px;
   line-height: 64px;
   text-align: center;
@@ -16,6 +15,32 @@
     min-width: 200px;
     width: 100%;
     margin: auto;
+  }
+
+  .player1score,
+  .player2score,
+  .player1section,
+  .player2section {
+    display: flex;
+  }
+
+  .player1score,
+  .player2score {
+    padding: 8px;
+    flex-direction: column;
+  }
+
+  .winner {
+    border: 2px solid green;
+  }
+
+  .winnerText {
+    font-size: .75em;
+    line-height: .75em;
+  }
+
+  .draw {
+    border: 2px solid orange;
   }
 
   .player1 {
