@@ -77,7 +77,7 @@ const initialState: GameState = {
   },
   ai: {
     player: TILE_COLOR.WHITE,
-    difficulty: DIFFICULTY.EASY,
+    difficulty: DIFFICULTY.MEDIUM,
     speed: 2,
   },
 };
@@ -87,6 +87,7 @@ export const gameSlice = createSlice({
   initialState,
   reducers: {
     reset: () => initialState,
+    setOptions: (state, action: PayloadAction<Partial<GameState>>) => ({ ...state, ...action.payload }),
     setInitialState: (state, action: PayloadAction<GamePiece[]>) => {
       state.turn = 0;
       const newGrid = makeGrid(state.rows, state.cols, action.payload);
@@ -107,7 +108,9 @@ export const gameSlice = createSlice({
   },
 });
 
-export const { reset, setInitialState, placePiece } = gameSlice.actions;
+export const {
+  reset, setOptions, setInitialState, placePiece,
+} = gameSlice.actions;
 
 export const useGameSelector = <T>(s: (a: GameState) => T) =>
   useSelector<RootState, T>((state) => s(state.game));

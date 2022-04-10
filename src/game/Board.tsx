@@ -9,7 +9,7 @@ export function Board() {
   const gameState = useGameSelector((s) => s.gameState);
   return (
     <div className="gameBoard" style={{ gridTemplateRows: `repeat(${gameState.length}, 1fr)` }}>
-      {thinking && <div className="waiting" />}
+      {thinking && <div className="boardOverlay" />}
       {gameState.map((gr, r) => (
         <div key={`row_${r}`} className="gridRow">
           {gr.map((tile, c) => (

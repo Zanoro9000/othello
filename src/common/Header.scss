@@ -19,5 +19,12 @@
   .buttonContainer {
     margin: auto;
     margin-right: 0;
+    display: flex;
+    flex-direction: column;
+
+    button {
+      padding: 1px;
+      margin-top: 2px;
+    }
   }
 }
