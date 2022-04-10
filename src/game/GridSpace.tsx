@@ -1,6 +1,12 @@
 import React from "react";
-import './GridSpace.css'
+import { GamePiece } from "../redux/slices/gameSlice";
+import './GridSpace.scss'
+import { Tile } from "./Tile";
 
-export function GridSpace({ index, space: _ }: any) {
-  return <div className="gridSpace">{index}</div>
+export type GridSpaceProps = {
+  tile: GamePiece
+}
+
+export function GridSpace({ tile }: GridSpaceProps) {
+  return <div className="gridSpace">{tile && <Tile tile={tile} />}</div>
 }

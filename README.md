@@ -29,6 +29,7 @@ Don’t write a backend, login page, or anything else that is a distraction from
     - Webpack
     - Typescript
     - EsLint
+    - SCSS
 2. Redux w/ Toolkit ✅
 3. Game board ✅
 4. Tiles

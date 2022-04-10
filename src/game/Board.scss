@@ -6,13 +6,18 @@
   border: 1px solid black;
   width: min-content;
   grid-auto-flow: row;
+  width: max(min(60vh, 60vw), 300px);
+  height: max(min(60vh, 60vw), 300px);
+  background-color: #371d10;
 }
 
 .gridRow {
   border-bottom: 1px solid black;
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
   box-sizing: border-box;
-  height: 50px;
+  background-color: #6699cc;
 }
 
 .gridRow:first-child {

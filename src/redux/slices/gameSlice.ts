@@ -2,20 +2,21 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store'
 
-enum COLOR {
+export enum TILE_COLOR {
   BLACK,
-  WHITE
+  WHITE,
+  AVAILABLE
 }
 
-type GamePiece = {
+export type GamePiece = {
   row: number;
   col: number;
-  type: COLOR;
+  type: TILE_COLOR;
 }
 
 export type GameState = {
   turn: number;
-  startingPlayer: COLOR;
+  startingPlayer: TILE_COLOR;
   rows: number;
   cols: number;
   gameState: GamePiece[]
@@ -24,7 +25,7 @@ export type GameState = {
 // Define the initial state using that type
 const initialState: GameState = {
   turn: 0,
-  startingPlayer: COLOR.BLACK,
+  startingPlayer: TILE_COLOR.BLACK,
   rows: 8,
   cols: 8,
   gameState: [],

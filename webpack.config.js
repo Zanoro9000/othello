@@ -3,6 +3,7 @@ const path = require("path");
 
 module.exports = {
   entry: "./src/index.tsx",
+  mode: 'production',
   output: {
     filename: "bundle.[hash].js",
     path: path.resolve(__dirname, "dist"),
@@ -18,6 +19,17 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          // Creates `style` nodes from JS strings
+          "style-loader",
+          // Translates CSS into CommonJS
+          "css-loader",
+          // Compiles Sass to CSS
+          "sass-loader",
+        ],
+      },
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
@@ -38,4 +50,8 @@ module.exports = {
       }, 
     ],
   },
+  performance: {
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
+  }
 };

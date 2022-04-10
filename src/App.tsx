@@ -1,6 +1,6 @@
 import React from "react"
 import { Provider } from "react-redux"
-import './App.css'
+import './App.scss'
 import { Header } from "./common/Header"
 import { Board } from "./game/Board"
 import { appStore } from "./redux/store"
