@@ -19,12 +19,17 @@
   .buttonContainer {
     margin: auto;
     margin-right: 0;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 8px;
+    height: 64px;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+    padding: 4px;
 
     button {
+      width: 100%;
       padding: 1px;
-      margin-top: 2px;
     }
   }
 }

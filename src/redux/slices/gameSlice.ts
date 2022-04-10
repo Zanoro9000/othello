@@ -89,21 +89,41 @@ export const gameSlice = createSlice({
     reset: () => initialState,
     setOptions: (state, action: PayloadAction<Partial<GameState>>) => ({ ...state, ...action.payload }),
     setInitialState: (state, action: PayloadAction<GamePiece[]>) => {
-      state.turn = 0;
+      let turn = 0;
       const newGrid = makeGrid(state.rows, state.cols, action.payload);
-      state.gameState = mFillGrid(newGrid, getValidNewPieces(newGrid, 0));
+      const validNewPieces = getValidNewPieces(newGrid, turn);
+      if (validNewPieces.length === 0) turn += 1;
+      state.gameState = validNewPieces.length > 0
+        ? mFillGrid(newGrid, validNewPieces)
+        : mFillGrid(newGrid, getValidNewPieces(newGrid, turn));
       state.state = STATE.PLAYING;
+      state.turn = turn;
     },
     placePiece: (state, action: PayloadAction<PlacedGamePiece>) => {
-      const newTurn = state.turn + 1;
+      let newTurn = state.turn + 1;
       const newGrid = clearAvailablePieces(mFillGrid(state.gameState, [action.payload]));
       const flippableTiles = getFlippableTiles(newGrid, action.payload.row, action.payload.col, action.payload.type);
       const flippedTiles = flippableTiles.map((t) => ({ ...t, type: getOtherPlayer(t.type) }));
       mFillGrid(newGrid, flippedTiles);
       const validNewPieces = getValidNewPieces(newGrid, getTileColor(newTurn, state.startingPlayer));
-      state.gameState = mFillGrid(newGrid, validNewPieces);
-      state.turn = newTurn;
-      state.state = validNewPieces.length > 0 ? STATE.PLAYING : STATE.FINISHED;
+
+      if (validNewPieces.length > 0) {
+        state.gameState = mFillGrid(newGrid, validNewPieces);
+        state.turn = newTurn;
+        state.state = STATE.PLAYING;
+      } else {
+        newTurn += 1;
+        const skippedTurnValidPieces = getValidNewPieces(newGrid, getTileColor(newTurn, state.startingPlayer));
+        if (skippedTurnValidPieces.length > 0) {
+          state.gameState = mFillGrid(newGrid, skippedTurnValidPieces);
+          state.turn = newTurn;
+          state.state = STATE.PLAYING;
+        } else {
+          state.gameState = mFillGrid(newGrid, skippedTurnValidPieces);
+          state.turn = newTurn;
+          state.state = STATE.FINISHED;
+        }
+      }
     },
   },
 });

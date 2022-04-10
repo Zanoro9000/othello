@@ -160,5 +160,25 @@ export function defaultStartingPieces(rows: number, cols: number): GamePiece[] {
   ];
 }
 
+export function blackNoTurnStartingPieces(rows: number, cols: number): GamePiece[] {
+  const grid = makeEmptyGrid(rows, cols);
+  return grid.flatMap((row, r) => row.map((tile, c) => {
+    if (
+      (r === 0 && c === 0)
+      || (r === 0 && c === cols - 1)
+      || (r === rows - 1 && c === 0)
+      || (r === rows - 1 && c === cols - 1)
+    ) return null;
+
+    if (r === 4 && c === 3) return { row: r, col: c, type: TILE_COLOR.WHITE };
+
+    return {
+      row: r,
+      col: c,
+      type: TILE_COLOR.BLACK,
+    };
+  })).filter(Boolean);
+}
+
 export const getTileColor = (turn: number, startingPlayer: Player): Player => (turn % 2) - startingPlayer;
 export const getOtherPlayer = (color: Player): Player => 1 - color;
