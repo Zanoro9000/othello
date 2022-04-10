@@ -50,16 +50,18 @@ export function getFlippableTiles(board: PlacedGamePiece[][], row: number, col: 
 
   if (row < 0 || col < 0 || row >= rows || col >= cols) return null;
 
+  const allTiles = [];
+
   for (let r = Math.max(row - 1, 0); r <= Math.min(row + 1, rows - 1); r++) {
     for (let c = Math.max(col - 1, 0); c <= Math.min(col + 1, cols - 1); c++) {
       if (r === row && c === col) continue;
       const foundTiles = getFlippableInDirection(board, row, col, [r - row, c - col], origColor).filter(Boolean);
       const lastTile = foundTiles.pop();
-      if (lastTile && lastTile.type === origColor && foundTiles.length > 0) return foundTiles;
+      if (lastTile && lastTile.type === origColor && foundTiles.length > 0) allTiles.push(foundTiles);
     }
   }
 
-  return [];
+  return allTiles.flatMap((at) => at);
 }
 
 export function placeAndFlip(board: PlacedGamePiece[][], piece: PlacedGamePiece): GamePiece[][] {
