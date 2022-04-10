@@ -1,7 +1,23 @@
 .header {
-  width: 100%;
+  width: 60%;
+  margin: auto;
   height: 64px;
   font-size: 32px;
   line-height: 64px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  position: relative;
+
+  .title {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+  }
+
+  .buttonContainer {
+    margin: auto;
+    margin-right: 0;
+  }
 }

@@ -45,6 +45,7 @@ export const gameSlice = createSlice({
     },
     placePiece: (state, action: PayloadAction<GamePiece>) => {
       state.gameState[action.payload.row][action.payload.col] = action.payload;
+      state.turn += 1;
     },
   },
 });
