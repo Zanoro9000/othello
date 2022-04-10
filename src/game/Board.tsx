@@ -1,7 +1,7 @@
 import React from 'react';
-import { useGameSelector } from '../redux/slices/gameSlice';
+import { TILE_COLOR, useGameSelector } from '../redux/slices/gameSlice';
 import './Board.scss';
-import { Tile } from './Tile';
+import { PlacedTile, AvailableTile } from './Tile';
 
 export function Board() {
   const gameState = useGameSelector((s) => s.gameState);
@@ -11,7 +11,11 @@ export function Board() {
         <div key={`row_${r}`} className="gridRow">
           {gr.map((tile, c) => (
             <div key={`space_${r}x${c}`} className="gridSpace">
-              {tile?.type !== undefined && <Tile key={`tile_${r}x${c}`} row={r} col={c} type={tile?.type} />}
+              {tile === null
+                ? null
+                : tile?.type === TILE_COLOR.AVAILABLE
+                  ? <AvailableTile key={`tile_${r}x${c}`} row={r} col={c} type={tile.type} />
+                  : <PlacedTile key={`tile_${r}x${c}`} row={r} col={c} type={tile.type} />}
             </div>
           ))}
         </div>

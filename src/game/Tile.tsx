@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import {
-  GamePiece, placePiece, Player, TILE_COLOR,
+  GamePiece, PlacedGamePiece, placePiece, Player, TILE_COLOR,
 } from '../redux/slices/gameSlice';
 import { getTileColor } from './gameHelpers';
 import './Tile.scss';
@@ -17,7 +17,11 @@ const getTileClassName = (type: TILE_COLOR): TileClassNames => {
   }
 };
 
-function TileComp({ row, col, type }: GamePiece) {
+export function PlacedTile({ type }: PlacedGamePiece) {
+  return <div className={`tile ${getTileClassName(type)}`} />;
+}
+
+export function AvailableTile({ row, col, type }: GamePiece) {
   const dispatch = useAppDispatch();
   const { startingPlayer, turn } = useAppSelector((s) => ({ startingPlayer: s.game.startingPlayer, turn: s.game.turn }));
 
@@ -28,15 +32,8 @@ function TileComp({ row, col, type }: GamePiece) {
   // startingPlayer is enum of color, so either 0 or 1
   const turnColor: TILE_COLOR = turn % 2 === startingPlayer ? startingPlayer : 1 - startingPlayer;
 
-  // button for accessibility
-  const Component = type === TILE_COLOR.AVAILABLE
-    ? (props: React.HTMLAttributes<HTMLButtonElement>) => <button onClick={onClick} {...props} />
-    : (props: React.HTMLAttributes<HTMLDivElement>) => <div {...props} />;
-
-  return <Component className={`tile ${getTileClassName(type)} turn-${getTileClassName(turnColor)}`} />;
+  return <button onClick={onClick} className={`tile ${getTileClassName(type)} turn-${getTileClassName(turnColor)}`} />;
 }
-
-export const Tile = React.memo((props: GamePiece) => <TileComp {...props} />);
 
 export type StaticTileProps = {
   color: Player,

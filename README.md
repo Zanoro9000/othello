@@ -33,7 +33,8 @@ Don’t write a backend, login page, or anything else that is a distraction from
 2. Redux w/ Toolkit ✅
 3. Game board ✅ 
 4. Tiles ✅
-5. Game logic
+5. Game logic ✅
+6. Show winner
 
 ## Future Features
 - Save and resume game state
@@ -42,8 +43,8 @@ Don’t write a backend, login page, or anything else that is a distraction from
 - Landing screen
   - Continue
     - Resume game state implemented
-  - New Game
-    - Local Multiplayer
+  - New Game ✅
+    - Local Multiplayer ✅
     - AI
     - Online
 - Tile animations
