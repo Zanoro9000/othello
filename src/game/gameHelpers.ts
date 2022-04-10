@@ -52,11 +52,12 @@ function searchAroundTile(board: GamePiece[][], row: number, col: number, origCo
   if (row < 0 || col < 0 || row >= rows || col >= cols) return null;
 
   const matchedTiles: GamePiece[] = [];
-  for (let r = Math.max(row - 1, 0); r < rows; r++) {
-    for (let c = Math.max(col - 1, 0); c < cols; c++) {
-      const foundTile = searchDirection(board, row, col, [r, c], origColor);
+  for (let r = Math.max(row - 1, 0); r <= Math.min(row + 1, rows - 1); r++) {
+    for (let c = Math.max(col - 1, 0); c <= Math.min(col + 1, cols - 1); c++) {
+      if (r === row && c === col) continue;
+      const foundTile = searchDirection(board, row, col, [r - row, c - col], origColor);
       // tiles cannot be adjacent to the original tile (distance must be > 1)
-      if (Math.abs(foundTile.row - row) > 1 && Math.abs(foundTile.col - col) > 1) matchedTiles.push(foundTile);
+      if (foundTile && (Math.abs(foundTile.row - row) > 1 || Math.abs(foundTile.col - col) > 1)) matchedTiles.push(foundTile);
     }
   }
 
@@ -75,23 +76,23 @@ export function getValidPieces(board: GamePiece[][], turn: Player): GamePiece[] 
 export function defaultStartingPieces(rows: number, cols: number): GamePiece[] {
   return [
     {
-      row: Math.floor(rows / 2),
-      col: Math.floor(cols / 2),
+      row: Math.floor(rows / 2) - 1,
+      col: Math.floor(cols / 2) - 1,
       type: TILE_COLOR.BLACK,
     },
     {
-      row: Math.floor(rows / 2),
-      col: Math.floor(cols + 2 / 2),
-      type: TILE_COLOR.WHITE,
-    },
-    {
-      row: Math.floor(rows + 2 / 2),
+      row: Math.floor(rows / 2) - 1,
       col: Math.floor(cols / 2),
       type: TILE_COLOR.WHITE,
     },
     {
-      row: Math.floor(rows + 2 / 2),
-      col: Math.floor(cols + 2 / 2),
+      row: Math.floor(rows / 2),
+      col: Math.floor(cols / 2) - 1,
+      type: TILE_COLOR.WHITE,
+    },
+    {
+      row: Math.floor(rows / 2),
+      col: Math.floor(cols / 2),
       type: TILE_COLOR.BLACK,
     },
   ];

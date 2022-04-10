@@ -9,7 +9,7 @@ export function Board() {
   return (
     <div className="gameBoard" style={{ gridTemplateRows: `repeat(${rows}, 1fr)` }}>
       {gameState.map((gr, r) => (
-        <div className="gridRow">
+        <div key={`row_${r}`} className="gridRow">
           {gr.map((tile, c) => <GridSpace key={`space_${r}x${c}`} tile={tile} />)}
         </div>
       ))}

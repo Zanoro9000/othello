@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { useSelector } from 'react-redux';
-import { makeEmptyGrid, makeGrid } from '../../game/gameHelpers';
+import {
+  getValidPieces, makeEmptyGrid, makeGrid, mFillGrid,
+} from '../../game/gameHelpers';
 import type { RootState } from '../store';
 
 export enum TILE_COLOR {
@@ -41,7 +43,9 @@ export const gameSlice = createSlice({
     reset: () => initialState,
     setInitialState: (state, action: PayloadAction<GamePiece[]>) => {
       state.turn = 0;
-      state.gameState = makeGrid(state.rows, state.cols, action.payload);
+      const newGrid = makeGrid(state.rows, state.cols, action.payload);
+      const validPieces = getValidPieces(newGrid, 0);
+      state.gameState = mFillGrid(newGrid, validPieces);
     },
     placePiece: (state, action: PayloadAction<GamePiece>) => {
       state.gameState[action.payload.row][action.payload.col] = action.payload;
