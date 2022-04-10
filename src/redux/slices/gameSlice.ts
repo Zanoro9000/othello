@@ -44,8 +44,7 @@ export const gameSlice = createSlice({
     setInitialState: (state, action: PayloadAction<GamePiece[]>) => {
       state.turn = 0;
       const newGrid = makeGrid(state.rows, state.cols, action.payload);
-      const validPieces = getValidPieces(newGrid, 0);
-      state.gameState = mFillGrid(newGrid, validPieces);
+      state.gameState = mFillGrid(newGrid, getValidPieces(newGrid, 0));
     },
     placePiece: (state, action: PayloadAction<GamePiece>) => {
       state.gameState[action.payload.row][action.payload.col] = action.payload;
