@@ -70,7 +70,7 @@ function searchAroundTile(board: GamePiece[][], row: number, col: number, origCo
   return matchedTiles.filter(Boolean);
 }
 
-export function getValidPieces(board: GamePiece[][], turn: Player): GamePiece[] {
+export function getValidNewPieces(board: GamePiece[][], turn: Player): GamePiece[] {
   const pieces = getPieces(board, turn);
 
   // get all valid pieces, then get unique pieces from that set

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import {
   clearAvailablePieces,
   getTileColor,
-  getValidPieces, makeEmptyGrid, makeGrid, mFillGrid,
+  getValidNewPieces, makeEmptyGrid, makeGrid, mFillGrid,
 } from '../../game/gameHelpers';
 import type { RootState } from '../store';
 
@@ -21,7 +21,14 @@ export type GamePiece = {
   type: TILE_COLOR;
 }
 
+export enum STATE {
+  STARTING,
+  PLAYING,
+  FINISHED
+}
+
 export type GameState = {
+  state: STATE;
   turn: number;
   startingPlayer: Player;
   rows: number;
@@ -32,6 +39,7 @@ export type GameState = {
 // Define the initial state using that type
 const initialState: GameState = {
   turn: 0,
+  state: STATE.STARTING,
   startingPlayer: TILE_COLOR.BLACK,
   rows: 8,
   cols: 8,
@@ -46,13 +54,15 @@ export const gameSlice = createSlice({
     setInitialState: (state, action: PayloadAction<GamePiece[]>) => {
       state.turn = 0;
       const newGrid = makeGrid(state.rows, state.cols, action.payload);
-      state.gameState = mFillGrid(newGrid, getValidPieces(newGrid, 0));
+      state.gameState = mFillGrid(newGrid, getValidNewPieces(newGrid, 0));
+      state.state = STATE.PLAYING;
     },
     placePiece: (state, action: PayloadAction<GamePiece>) => {
       const newTurn = state.turn + 1;
       const newGrid = clearAvailablePieces(mFillGrid(state.gameState, [action.payload]));
-      state.gameState = mFillGrid(newGrid, getValidPieces(newGrid, getTileColor(newTurn, state.startingPlayer)));
-      state.turn = newTurn;
+      const validNewPieces = getValidNewPieces(newGrid, getTileColor(newTurn, state.startingPlayer));
+      state.gameState = mFillGrid(newGrid, validNewPieces);
+      state.turn = validNewPieces.length > 0 ? newTurn : STATE.FINISHED;
     },
   },
 });
