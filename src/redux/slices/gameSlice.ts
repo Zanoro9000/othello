@@ -70,7 +70,7 @@ const initialState: GameState = {
   rows: 8,
   cols: 8,
   gameState: makeEmptyGrid(8, 8),
-  gameType: GAME_TYPE.AI,
+  gameType: GAME_TYPE.LOCAL_MULTIPLAYER,
   user: {
     player: TILE_COLOR.BLACK,
     name: 'Player 1',

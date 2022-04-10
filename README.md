@@ -71,6 +71,8 @@ Don’t write a backend, login page, or anything else that is a distraction from
 - With current helpers, serializing the state of the game would have been simple to load from localstorage or a server
 - With redux, implementing "time travel" through the game would be easy and could be done with a placed tileset, using written helpers or serializing the entire game state
 ## What I could have done better
+- "Skipping turn" logic could be implemented better, I forgot to implement it till the very end
+  - You can test this with the "Skip Turn Game" button, its a scenario that only white has moves, even though the setup is black first
 - Added a component library for a true "new game" setup with config options
 - Styled the buttons and win text better, for a more aesthetic approach
   - Could have re-used the "waiting on AI" popover for the board to pop-up a You Won or You Lost message

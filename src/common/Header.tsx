@@ -25,7 +25,7 @@ export function Header() {
       <div className="buttonContainer">
         <button type="button" onClick={onNewLocalGame}>New Game (Local)</button>
         <button type="button" onClick={onNewAIGame(DIFFICULTY.EASY)}>New Game (AI Easy)</button>
-        <button type="button" onClick={onSkipTurnGame}>Skip Turn Game</button>
+        <button type="button" onClick={onSkipTurnGame}>New Skip Turn Game</button>
         <button type="button" onClick={onNewAIGame(DIFFICULTY.MEDIUM)}>New Game (AI Med)</button>
       </div>
     </div>
